@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pontos de Coleta | EcoTrack</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+</head>
+
+<body>
+
+    <nav>
+        <div class="container nav-content">
+            <a href="/" class="logo">ECOTRACK</a>
+            <div class="nav-links">
+                <a href="/#sobre">Sobre</a>
+                <a href="/#categorias">Categorias</a>
+                <a href="/pontos-coleta">Pontos de Coleta</a>
+                <span sec:authorize="isAnonymous()">
+                    <a th:href="@{/login}" class="btn-login">ENTRAR</a>
+                </span>
+                <span sec:authorize="isAuthenticated()">
+                    <a th:href="@{/painel}" class="btn-login">MEU PAINEL</a>
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <main style="padding-top: 120px;">
+        <section class="container">
+            <h1 class="section-title" style="text-align: left; margin-bottom: var(--spacing-sm);">Pontos de Coleta</h1>
+            <p style="color: var(--text-muted); margin-bottom: var(--spacing-lg); font-size: 1.2rem;">
+                Encontre o local mais próximo para descartar seus resíduos eletrônicos de forma responsável.
+            </p>
+
+            <div class="features-grid">
+                <!-- Iterando sobre os pontos vindos do banco -->
+                <div th:each="ponto : ${pontos}" class="feature-card">
+                    <span th:text="${ponto.tipo.nome}"
+                        style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: var(--secondary); letter-spacing: 0.1em;">
+                        TIPO
+                    </span>
+                    <h3 th:text="${ponto.nome}" style="margin-top: 0.5rem;">Nome do Ponto</h3>
+                    <p th:text="${ponto.endereco.logradouro + ', ' + ponto.endereco.complemento}">
+                        Endereço Completo
+                    </p>
+                    <p style="font-size: 0.9rem; margin-top: 0.5rem;">
+                        <strong th:text="${ponto.endereco.bairro}">Bairro</strong><br>
+                        <span th:text="${ponto.endereco.cidade + ' - ' + ponto.endereco.estado}">Cidade - UF</span>
+                    </p>
+                    <div style="margin-top: var(--spacing-md);">
+                        <a th:href="${ponto.endereco.urlMapa}" target="_blank" class="btn-login"
+                            style="padding: 0.5rem 1rem; display: inline-block;">Ver no Mapa</a>
+                    </div>
+                </div>
+
+                <!-- Caso não existam pontos (vazio) -->
+                <div th:if="${#lists.isEmpty(pontos)}"
+                    style="grid-column: 1/-1; text-align: center; padding: var(--spacing-lg);">
+                    <p>Nenhum ponto de coleta encontrado no momento.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+            <p>&copy; 2026 EcoTrack. Faculdade Unicsul - Projeto de Descarte de Resíduos Eletrônicos.</p>
+            <a th:href="@{/adm/login}"
+                style="color: var(--text-muted); font-size: 0.8rem; text-decoration: none; opacity: 0.7;">Acesso
+                Administrativo</a>
+        </div>
+    </footer>
+
+</body>
+
+</html>

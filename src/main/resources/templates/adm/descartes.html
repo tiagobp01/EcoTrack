@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{adm/layout :: layout(~{::content})}">
+
+<body>
+    <div th:fragment="content">
+        <th:block th:with="title='Gestão de Descartes'"></th:block>
+        <section class="container">
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-lg);">
+                <div>
+                    <h1 class="section-title" style="text-align: left; margin-bottom: 0.5rem;">Todas as Solicitações
+                    </h1>
+                    <p style="color: var(--text-muted);">Administração global de coletas solicitadas.</p>
+                </div>
+                <a th:href="@{/adm/descartes/relatorio-pdf}" class="btn-login"
+                    style="background-color: #f3f4f6; color: var(--text); border: 1px solid #ddd;">Gerar Relatório
+                    PDF</a>
+            </div>
+
+            <div th:if="${success}"
+                style="background-color: #dcfce7; color: #166534; padding: 1rem; border-radius: 12px; margin-bottom: var(--spacing-md);">
+                <span th:text="${success}">Sucesso!</span>
+            </div>
+            <div th:if="${error}"
+                style="background-color: #fee2e2; color: #dc2626; padding: 1rem; border-radius: 12px; margin-bottom: var(--spacing-md);">
+                <span th:text="${error}">Erro!</span>
+            </div>
+
+            <div class="features-grid">
+                <div th:each="descarte : ${descartes}" class="feature-card"
+                    style="padding: 0; display: flex; flex-direction: column;">
+                    <div style="padding: 1.5rem; flex-grow: 1;">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <span th:text="${descarte.categoria.nome}"
+                                style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: var(--secondary); letter-spacing: 0.1em; background: #f0fdf4; padding: 0.2rem 0.5rem; border-radius: 4px;">
+                                CATEGORIA
+                            </span>
+                            <span th:text="${descarte.situacao.nome}"
+                                style="font-size: 0.7rem; padding: 0.2rem 0.6rem; border-radius: 9999px; background: #eef2ff; color: #4338ca; font-weight: 600;">
+                                STATUS
+                            </span>
+                        </div>
+
+                        <h3 th:text="${descarte.pontoColeta.nome}" style="margin-bottom: 0.5rem; font-size: 1.1rem;">
+                            Ponto de Coleta</h3>
+
+                        <div style="font-size: 0.9rem; color: var(--text); margin-bottom: 1rem; line-height: 1.6;">
+                            <p><strong>Doador:</strong> <span th:text="${descarte.usuario.nome}">Nome</span></p>
+                            <p><strong>Contato:</strong> <span th:text="${descarte.usuario.email}">email</span></p>
+                            <p><strong>Quantidade:</strong> <span th:text="${descarte.quantidade}">0</span> kg/un</p>
+                        </div>
+
+                        <p
+                            style="font-size: 0.8rem; color: var(--text-muted); padding-top: 0.5rem; border-top: 1px solid #f3f4f6;">
+                            Solicitado em: <span
+                                th:text="${#temporals.format(descarte.dataDescarte, 'dd/MM/yyyy HH:mm')}">01/01/2026</span>
+                        </p>
+                    </div>
+
+                    <!-- Rodapé do Card com Ação de Status -->
+                    <div style="background-color: #f9fafb; padding: 1rem; border-top: 1px solid #eee;">
+                        <form th:action="@{/adm/descartes/status/{id}(id=${descarte.id})}" method="post"
+                            style="display: flex; gap: 0.5rem;">
+                            <select name="situacaoId" required
+                                style="flex: 1; padding: 0.5rem; border: 1px solid #ddd; border-radius: 6px; font-size: 0.85rem; outline: none;">
+                                <option value="" disabled selected>Alterar Situação...</option>
+                                <option th:each="s : ${situacoes}" th:value="${s.id}" th:text="${s.nome}"
+                                    th:selected="${s.id == descarte.situacao.id}">Situação</option>
+                            </select>
+                            <button type="submit" class="hero-btn-primary"
+                                style="padding: 0.5rem 1rem; font-size: 0.8rem; border-radius: 6px;">OK</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div th:if="${#lists.isEmpty(descartes)}"
+                    style="grid-column: 1/-1; text-align: center; padding: var(--spacing-lg); border: 2px dashed #ddd; border-radius: 20px;">
+                    <p style="color: var(--text-muted);">Nenhuma solicitação de descarte encontrada no sistema.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoTrack | Gestão de Resíduos Eletrônicos</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <meta name="description"
+        content="EcoTrack: A solução moderna para o descarte responsável de resíduos eletrônicos. Conectando pessoas a pontos de coleta.">
+</head>
+
+<body>
+
+    <nav>
+        <div class="container nav-content">
+            <a href="/" class="logo">ECOTRACK</a>
+            <div class="nav-links">
+                <a href="#sobre">Sobre</a>
+                <a href="#categorias">Categorias</a>
+                <a href="/pontos-coleta">Pontos de Coleta</a>
+
+                <span sec:authorize="isAnonymous()">
+                    <a th:href="@{/login}" class="btn-login">ENTRAR</a>
+                </span>
+                <span sec:authorize="isAuthenticated()">
+                    <!-- Se for ADMIN, leva para o painel de ADM, senão para o painel comum -->
+                    <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/adm/dashboard}"
+                        class="btn-login">PAINEL ADM</a>
+                    <a th:unless="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/painel}"
+                        class="btn-login">MEU PAINEL</a>
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="container hero-grid">
+                <div class="hero-content">
+                    <h1>Descarte com <br><span style="color: var(--secondary)">Consciência.</span></h1>
+                    <p>Transforme o futuro do planeta dando o destino correto aos seus eletrônicos antigos. Simples,
+                        rápido e sustentável.</p>
+                    <a th:href="@{/cadastro}" class="btn-login">Começar Agora</a>
+                </div>
+                <div class="hero-image-container">
+                    <img th:src="@{/images/hero.png}" alt="Reciclagem de Eletrônicos" class="hero-image">
+                </div>
+            </div>
+        </section>
+
+        <section id="sobre" class="container">
+            <h2 class="section-title">Como funciona?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>01. Identifique</h3>
+                    <p>Veja quais eletrônicos podem ser reciclados e separe-os com cuidado.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>02. Localize</h3>
+                    <p>Encontre o ponto de coleta mais próximo de você através do nosso mapa interativo.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>03. Descarte</h3>
+                    <p>Leve seus resíduos ao ponto escolhido e receba seu comprovante de descarte sustentável.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="categorias" style="background: #fdfdfd;">
+            <div class="container">
+                <h2 class="section-title">O que coletamos</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h3>Smartphones</h3>
+                        <p>Celulares, tablets e acessórios que não funcionam mais.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Informática</h3>
+                        <p>Monitores, CPUs, teclados, mouses e cabos variados.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Baterias</h3>
+                        <p>Pilhas e baterias de lítio de diversos dispositivos.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Eletrodomésticos</h3>
+                        <p>Pequenos aparelhos como cafeteiras e microondas.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+            <p>&copy; 2026 EcoTrack. Faculdade Unicsul - Projeto de Descarte de Resíduos Eletrônicos.</p>
+            <a th:href="@{/adm/login}"
+                style="color: var(--text-muted); font-size: 0.8rem; text-decoration: none; opacity: 0.7;">Acesso
+                Administrativo</a>
+        </div>
+    </footer>
+
+</body>
+
+</html>

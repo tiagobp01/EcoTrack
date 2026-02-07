@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Conta | EcoTrack</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+</head>
+
+<body
+    style="background-color: var(--bg-secondary); display: flex; align-items: center; justify-content: center; min-height: 100vh;">
+
+    <div class="container" style="max-width: 450px;">
+        <div class="feature-card" style="padding: var(--spacing-lg); text-align: center;">
+            <a href="/" class="logo" style="display: block; margin-bottom: var(--spacing-md);">ECOTRACK</a>
+            <h2 style="margin-bottom: var(--spacing-sm);">Crie sua conta</h2>
+            <p style="color: var(--text-muted); margin-bottom: var(--spacing-lg);">Junte-se a nós para um mundo mais
+                sustentável.</p>
+
+            <form th:action="@{/cadastro}" th:object="${usuario}" method="post" style="text-align: left;">
+                <div th:if="${error}"
+                    style="background-color: #fee2e2; color: #dc2626; padding: 0.8rem; border-radius: 8px; margin-bottom: var(--spacing-md); font-size: 0.9rem; text-align: center;">
+                    <span th:text="${error}">Erro ao cadastrar</span>
+                </div>
+                <div style="margin-bottom: var(--spacing-md);">
+                    <label for="nome" style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Nome
+                        Completo</label>
+                    <input type="text" id="nome" th:field="*{nome}" required
+                        style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; outline: none;">
+                </div>
+
+                <div style="margin-bottom: var(--spacing-md);">
+                    <label for="email" style="display: block; font-weight: 600; margin-bottom: 0.5rem;">E-mail</label>
+                    <input type="email" id="email" th:field="*{email}" required
+                        style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; outline: none;">
+                </div>
+
+                <div style="margin-bottom: var(--spacing-lg);">
+                    <label for="senha" style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Senha</label>
+                    <input type="password" id="senha" th:field="*{senha}" required
+                        style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; outline: none;">
+                </div>
+
+                <button type="submit" class="hero-btn-primary"
+                    style="width: 100%; padding: 1rem; border: none; cursor: pointer;">
+                    Cadastrar agora
+                </button>
+            </form>
+
+            <p style="margin-top: var(--spacing-md); font-size: 0.9rem;">
+                Já tem uma conta? <a th:href="@{/login}"
+                    style="color: var(--secondary); text-decoration: none; font-weight: 600;">Faça login</a>
+            </p>
+        </div>
+
+        <div
+            style="text-align: center; margin-top: var(--spacing-md); display: flex; justify-content: center; gap: 1rem; align-items: center;">
+            <a href="/" style="color: var(--text-muted); text-decoration: none; font-size: 0.8rem;">&larr; Voltar para a
+                Home</a>
+            <span style="color: var(--text-muted); opacity: 0.3;">|</span>
+            <a th:href="@{/adm/login}"
+                style="color: var(--text-muted); text-decoration: none; font-size: 0.8rem; opacity: 0.7;">Acesso
+                Administrativo</a>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    th:fragment="layout(content)">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title != null ? title + ' | Admin EcoTrack' : 'Admin EcoTrack'}">Admin EcoTrack</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+</head>
+
+<body style="background-color: var(--bg-secondary);">
+
+    <nav>
+        <div class="container nav-content">
+            <a th:href="@{/adm/dashboard}" class="logo">ECOTRACK <span
+                    style="font-size: 0.8rem; color: var(--secondary)">ADM</span></a>
+            <div class="nav-links">
+                <a th:href="@{/adm/dashboard}">Dashboard</a>
+                <a th:href="@{/adm/usuarios}">Usuários</a>
+                <a th:href="@{/adm/pontos}">Pontos</a>
+                <a th:href="@{/adm/descartes}">Solicitações</a>
+                <form th:action="@{/adm/logout}" method="get" style="display: inline;">
+                    <button type="submit"
+                        style="background:none; border:none; cursor:pointer; color: var(--text); font-weight: 600;">Sair</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <main style="padding-top: 100px; padding-bottom: 50px;">
+        <div th:replace="${content}">
+            <!-- Page content will be inserted here -->
+        </div>
+    </main>
+
+    <footer>
+        <div class="container" style="text-align: center; padding: var(--spacing-lg) 0;">
+            <p style="color: var(--text-muted); font-size: 0.9rem;">&copy; 2026 EcoTrack. Faculdade Unicsul - Painel
+                Administrativo.</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

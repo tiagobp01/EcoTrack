@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{adm/layout :: layout(~{::content})}">
+
+<body>
+    <div th:fragment="content">
+        <th:block th:with="title='Painel Administrativo'"></th:block>
+        <section class="container">
+            <div style="margin-bottom: var(--spacing-lg);">
+                <h1 class="section-title" style="text-align: left;">Painel do Administrador</h1>
+                <p style="color: var(--text-muted);">Visão geral do sistema EcoTrack.</p>
+            </div>
+
+            <div th:if="${success}"
+                style="background-color: #dcfce7; color: #166534; padding: 1rem; border-radius: 12px; margin-bottom: var(--spacing-md);">
+                <span th:text="${success}">Sucesso!</span>
+            </div>
+            <div th:if="${error}"
+                style="background-color: #fee2e2; color: #dc2626; padding: 1rem; border-radius: 12px; margin-bottom: var(--spacing-md);">
+                <span th:text="${error}">Erro!</span>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3 style="color: var(--secondary)">Usuários</h3>
+                    <p style="font-size: 2rem; font-weight: 800; margin: 1rem 0;" th:text="${totalUsuarios}">0</p>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">Gerenciar perfis e acessos</p>
+                    <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                        <a th:href="@{/adm/usuarios}" class="btn-login"
+                            style="padding: 0.5rem 1rem; font-size: 0.8rem; flex: 1; display: inline-block; text-align: center;">Listar</a>
+                        <a th:href="@{/adm/usuarios/novo}" class="btn-login"
+                            style="padding: 0.5rem 1rem; font-size: 0.8rem; flex: 1; display: inline-block; text-align: center; background-color: var(--accent); color: var(--primary);">Novo</a>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <h3 style="color: var(--secondary)">Descartes</h3>
+                    <p style="font-size: 2rem; font-weight: 800; margin: 1rem 0;" th:text="${totalDescartes}">0</p>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">Solicitados até o momento</p>
+                    <a th:href="@{/adm/descartes}" class="btn-login"
+                        style="padding: 0.5rem 1rem; font-size: 0.8rem; margin-top: 1rem; display: inline-block;">Ver
+                        Detalhes</a>
+                </div>
+                <div class="feature-card">
+                    <h3 style="color: var(--secondary)">Pontos de Coleta</h3>
+                    <p style="font-size: 2rem; font-weight: 800; margin: 1rem 0;" th:text="${totalPontos}">0</p>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">Gerenciar locais de coleta</p>
+                    <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                        <a th:href="@{/adm/pontos}" class="btn-login"
+                            style="padding: 0.5rem 1rem; font-size: 0.8rem; flex: 1; display: inline-block; text-align: center;">Ver
+                            Todos</a>
+                        <a th:href="@{/adm/pontos/novo}" class="btn-login"
+                            style="padding: 0.5rem 1rem; font-size: 0.8rem; flex: 1; display: inline-block; text-align: center; background-color: var(--accent); color: var(--primary);">Novo
+                            Ponto</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+
+</html>

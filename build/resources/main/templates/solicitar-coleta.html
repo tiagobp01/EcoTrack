@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitar Coleta | EcoTrack</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+</head>
+
+<body style="background-color: var(--bg-secondary);">
+
+    <nav>
+        <div class="container nav-content">
+            <a href="/" class="logo">ECOTRACK</a>
+            <div class="nav-links">
+                <a href="/painel">Meu Painel</a>
+                <a href="/pontos-coleta">Pontos de Coleta</a>
+                <form th:action="@{/logout}" method="post" style="display: inline;">
+                    <button type="submit"
+                        style="background:none; border:none; cursor:pointer; color: var(--text); font-weight: 600;">Sair</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <main style="padding-top: 120px; padding-bottom: var(--spacing-lg);">
+        <div class="container" style="max-width: 600px;">
+            <div class="feature-card" style="padding: var(--spacing-lg);">
+                <h1 class="section-title" style="text-align: left; font-size: 2rem; margin-bottom: var(--spacing-sm);">
+                    Solicitar Descarte</h1>
+                <p style="color: var(--text-muted); margin-bottom: var(--spacing-lg);">Preencha os detalhes abaixo para
+                    agendar a entrega do seu resíduo eletrônico.</p>
+
+                <form th:action="@{/solicitar-coleta}" th:object="${descarte}" method="post">
+
+                    <div style="margin-bottom: var(--spacing-md);">
+                        <label for="categoria" style="display: block; font-weight: 600; margin-bottom: 0.5rem;">O que
+                            você vai descartar?</label>
+                        <select id="categoria" th:field="*{categoria.id}" required
+                            style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; outline: none; background-color: white;">
+                            <option value="">Selecione uma categoria...</option>
+                            <option th:each="cat : ${categorias}" th:value="${cat.id}" th:text="${cat.nome}"></option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: var(--spacing-md);">
+                        <label for="pontoColeta" style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Onde
+                            deseja entregar?</label>
+                        <select id="pontoColeta" th:field="*{pontoColeta.id}" required
+                            style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; outline: none; background-color: white;">
+                            <option value="">Escolha um ponto de coleta...</option>
+                            <option th:each="ponto : ${pontos}" th:value="${ponto.id}" th:text="${ponto.nome}"></option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: var(--spacing-lg);">
+                        <label for="quantidade"
+                            style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Quantidade (kg ou unidades
+                            aproximadas)</label>
+                        <input type="number" id="quantidade" th:field="*{quantidade}" step="0.01" required
+                            style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; outline: none;">
+                    </div>
+
+                    <div style="display: flex; gap: var(--spacing-md);">
+                        <a href="/painel" class="btn-login"
+                            style="flex: 1; text-align: center; background-color: #eee; color: var(--text);">Cancelar</a>
+                        <button type="submit" class="hero-btn-primary"
+                            style="flex: 2; padding: 1rem; border: none; cursor: pointer;">
+                            Confirmar Solicitação
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container" style="text-align: center;">
+            <p>&copy; 2026 EcoTrack. Faculdade Unicsul - Projeto de Descarte de Resíduos Eletrônicos.</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

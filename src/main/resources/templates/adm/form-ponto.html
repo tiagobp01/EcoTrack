@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{adm/layout :: layout(~{::content})}">
+
+<body>
+    <div th:fragment="content">
+        <th:block th:with="title=${ponto.id == null ? 'Novo Ponto' : 'Editar Ponto'}"></th:block>
+        <div class="container" style="max-width: 800px;">
+            <div style="margin-bottom: var(--spacing-md);">
+                <a href="/adm/pontos" style="color: var(--text-muted); text-decoration: none; font-size: 0.9rem;">&larr;
+                    Voltar para a Lista</a>
+            </div>
+
+            <div class="feature-card" style="padding: var(--spacing-lg);">
+                <h1 class="section-title" style="text-align: left; margin-bottom: var(--spacing-md);"
+                    th:text="${ponto.id == null ? 'Novo Ponto de Coleta' : 'Editar Ponto de Coleta'}">Novo Ponto de
+                    Coleta</h1>
+
+                <div th:if="${error}"
+                    style="background-color: #fee2e2; color: #dc2626; padding: 1rem; border-radius: 8px; margin-bottom: var(--spacing-md);">
+                    <span th:text="${error}">Erro</span>
+                </div>
+
+                <form th:action="${ponto.id == null ? '/adm/pontos/novo' : '/adm/pontos/editar/' + ponto.id}"
+                    th:object="${ponto}" method="post">
+                    <input type="hidden" th:field="*{id}">
+                    <input type="hidden" th:field="*{endereco.id}">
+                    <div
+                        style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md); margin-bottom: var(--spacing-md);">
+                        <div style="grid-column: 1 / -1;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Nome do
+                                Ponto</label>
+                            <input type="text" th:field="*{nome}" required
+                                style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; outline: none;">
+                        </div>
+
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Tipo de
+                                Ponto</label>
+                            <select th:field="*{tipo}" required
+                                style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; outline: none; background: white;">
+                                <option value="">Selecione...</option>
+                                <option th:each="t : ${tipos}" th:value="${t.id}" th:text="${t.nome}">Tipo</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">CEP</label>
+                            <input type="text" th:field="*{endereco.cep}" maxlength="8" required
+                                style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; outline: none;">
+                        </div>
+
+                        <div style="grid-column: 1 / -1;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Logradouro</label>
+                            <input type="text" th:field="*{endereco.logradouro}" required
+                                style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; outline: none;">
+                        </div>
+
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Bairro</label>
+                            <input type="text" th:field="*{endereco.bairro}" required
+                                style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; outline: none;">
+                        </div>
+
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Cidade</label>
+                            <input type="text" th:field="*{endereco.cidade}" required
+                                style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; outline: none;">
+                        </div>
+
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Estado (UF)</label>
+                            <input type="text" th:field="*{endereco.estado}" maxlength="2" required
+                                style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; outline: none;">
+                        </div>
+
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Complemento</label>
+                            <input type="text" th:field="*{endereco.complemento}"
+                                style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; outline: none;">
+                        </div>
+
+                        <div style="grid-column: 1 / -1;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">URL do Google
+                                Maps</label>
+                            <input type="url" th:field="*{endereco.urlMapa}"
+                                style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; outline: none;"
+                                placeholder="https://www.google.com/maps/...">
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: var(--spacing-sm); margin-top: var(--spacing-md);">
+                        <button type="submit" class="hero-btn-primary"
+                            style="flex: 1; border: none; padding: 1rem; cursor: pointer;"
+                            th:text="${ponto.id == null ? 'Cadastrar Ponto' : 'Salvar Alterações'}">Cadastrar
+                            Ponto</button>
+                        <a href="/adm/dashboard" class="btn-login"
+                            style="padding: 1rem; background: #eee; color: var(--text); text-decoration: none; text-align: center;">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
